@@ -11,9 +11,10 @@ export default async function getPhoto(photo){
         .then(response => response.json())
         .then(data => random = data);
 
-       console.log(random);
-        if(random.urls.full !== undefined){
-            return random.urls.full;
+        if(typeof(random.urls.regular) !== undefined){
+            return random.urls.regular;
+        }else{
+            return '404'
         }
         
     }else{
