@@ -1,0 +1,34 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    overflow: hidden;
+}
+#container{
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+#main{
+        width: 75%;
+        height: 200px;
+}
+img{
+        width: 200px;
+        height: 150px;
+}
+#content{
+    width: 100%;
+    height: 40%;
+    position: relative;
+}
+.tele{
+    font-family: 'Handlee', cursive;
+    text-decoration: none;
+    color: rgb(2, 181, 236);
+}
+

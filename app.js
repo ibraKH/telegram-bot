@@ -2,6 +2,21 @@ import TelegramBot from 'node-telegram-bot-api';
 import dotenv from "dotenv";
 dotenv.config();
 
+import express from 'express'
+import path from 'path'
+
+
+
+// web
+let app = express();
+const PORT = process.env.PORT || 3009
+app.set("view engine", "ejs");
+const __dirname = path.resolve();
+let publicDierctory = path.join(__dirname, "./public");
+app.use(express.static(publicDierctory));
+
+
+
 const token = process.env.TOKEN;
 
 const bot = new TelegramBot(token, {polling: true});
@@ -192,3 +207,9 @@ This command is for showing movies and their rating
     // 
 
 })
+
+app.get("/", (req,res) => {
+    return res.render("main");
+});
+
+app.listen(PORT, err => err ? console.log(err) : console.log("listening on PORT : " + PORT))
