@@ -19,11 +19,15 @@ app.use(express.static(publicDierctory));
 
 const token = process.env.TOKEN;
 
-const bot = new TelegramBot(token, {polling: true});
+
 
 import getPicture from './commands/space.js';
 import getWeather from './commands/weather.js';
 import getMovie from './commands/movies.js'
+import getPhoto from './commands/photos.js'
+
+
+const bot = new TelegramBot(token, {polling: true});
 
 
 bot.on("message", async (msg) => {
@@ -56,9 +60,10 @@ please write :
 
 The commands :
 
-/space        📸 
+/space       🔭 
 /weather     🌦
-/movies       🍿
+/movies      🍿
+/photos      📸
         `)
     }
 
@@ -102,7 +107,7 @@ ex : 2000-12-24
         〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
 
 This command is showing you picture of space taken in the same day as your birthday
-📸📸
+🔭🔭
 
 Write your birthday day like this :
 
@@ -204,8 +209,49 @@ This command is for showing movies and their rating
     }
 
 
-    // 
 
+    // Photos
+    if(msg.text.includes("show")){
+        let photos = msg.text.trim().split(" ").reverse()[0];
+        let result = await getPhoto(photos);
+        if(result == "404"){
+            return bot.sendMessage(msg.from.id, `🚩 Enter valid photos name 🚩`)
+        }
+        bot.sendMessage(msg.from.id, "Wait... ⏰")
+        await bot.sendPhoto(msg.from.id, result[0].urls.full);
+        await bot.sendPhoto(msg.from.id, result[1].urls.full);
+        await bot.sendPhoto(msg.from.id, result[2].urls.full)
+        return bot.sendMessage(msg.from.id, "🤩🤩")
+    }
+
+
+    if(msg.text == "/picker"){
+        let random = await getPhoto("random");;
+        return bot.sendPhoto(msg.from.id, random);
+    }
+
+    if(msg.text == "/catch"){
+        return bot.sendMessage(msg.from.id, `
+        〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+
+Write the name of the photos like this :
+
+show : "photos name" 
+ex => show : cars
+        `)
+    }
+
+    if(msg.text == "/photos"){
+        return bot.sendMessage(msg.from.id, `
+        〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+
+This command is for showing random or specific photos
+📸📸
+
+/picker    - To select random photos to watch 🔥
+/catch      - To get specific photos ✨
+        `)
+    }
 })
 
 app.get("/", (req,res) => {
