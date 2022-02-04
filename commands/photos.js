@@ -11,8 +11,8 @@ export default async function getPhoto(photo){
         .then(response => response.json())
         .then(data => random = data);
 
-
-        if(random.urls.full){
+       
+        if(random.urls.full !== undefined){
             return random.urls.full;
         }
         
@@ -29,7 +29,7 @@ export default async function getPhoto(photo){
     }else{
       return result.results
     }
-    
+
     }
 
 
