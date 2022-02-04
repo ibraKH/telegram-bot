@@ -30,7 +30,6 @@ import getPhoto from './commands/photos.js'
 const bot = new TelegramBot(token, {polling: true});
 
 
-
 bot.on("message", async (msg) => {
 
 
