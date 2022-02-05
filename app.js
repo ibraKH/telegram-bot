@@ -30,6 +30,8 @@ import getPhoto from './commands/photos.js'
 const bot = new TelegramBot(token, {polling: true});
 
 
+
+
 bot.on("message", async (msg) => {
 
 
@@ -217,10 +219,10 @@ This command is for showing movies and their rating
         if(result == "404"){
             return bot.sendMessage(msg.from.id, `🚩 Enter valid photos name 🚩`)
         }
-        bot.sendMessage(msg.from.id, "Wait... ⏰")
-        await bot.sendPhoto(msg.from.id, result[0].urls.regular);
-        await bot.sendPhoto(msg.from.id, result[1].urls.regular);
-        await bot.sendPhoto(msg.from.id, result[2].urls.regular);
+        await bot.sendMessage(msg.from.id, "Wait... ⏰")
+        await bot.sendPhoto(msg.from.id, result[0].urls.small);
+        await bot.sendPhoto(msg.from.id, result[1].urls.small);
+        await bot.sendPhoto(msg.from.id, result[2].urls.small);
         return bot.sendMessage(msg.from.id, "🤩🤩")
     }
 
