@@ -25,11 +25,12 @@ import getPicture from './commands/space.js';
 import getWeather from './commands/weather.js';
 import getMovie from './commands/movies.js'
 import getPhoto from './commands/photos.js'
+import Pool from './database/connection.js'
 
 
 const bot = new TelegramBot(token, {polling: true});
 
-
+var answerCallbacks = "default";
 
 bot.on("callback_query", async (msg) => {
 
@@ -37,7 +38,7 @@ bot.on("callback_query", async (msg) => {
     // start
     if(msg.data == "start"){
         bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
-        bot.sendMessage(msg.from.id, `
+        return bot.sendMessage(msg.from.id, `
 🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆 
 `, {
     reply_markup: {
@@ -49,6 +50,7 @@ bot.on("callback_query", async (msg) => {
 })
     }
     if(msg.data == "ar"){
+        answerCallbacks = "ar";
         bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
         return bot.sendMessage(msg.from.id, `
         🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆
@@ -70,6 +72,7 @@ bot.on("callback_query", async (msg) => {
         })
     }
     if(msg.data == "en"){
+        answerCallbacks = "en";
         bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
         return bot.sendMessage(msg.from.id, `
         🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆
@@ -136,7 +139,68 @@ bot.on("callback_query", async (msg) => {
 
 يوم-شهر-سنة
 مثال : 24-12-2000
-        `);
+        `, {reply_markup: JSON.stringify({force_reply: true})}).then((replay) => {
+            bot.onReplyToMessage(replay.chat.id, replay.message_id, async (anwser) => {
+                anwser.text.toLowerCase();
+                let cleanText = anwser.text.replace(" ", "");
+        let regex = /[^0-9-]/gi
+        if(regex.test(cleanText)){
+            return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Date 🚩
+الرجاء كتابة تاريخ صحيح
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "spaceAR"}]
+                            ]
+                        }
+                    })
+        }
+
+        const arr = cleanText.split("-")
+        if(arr[0].length == 4 && (parseInt(arr[0]) < 2022)){
+            if((arr[1].length === 2 || arr[1].length === 1) && (parseInt(arr[1]) < 13)){
+                if((arr[2].length === 2 || arr[2].length === 1) && (parseInt(arr[2]) < 32)){
+                    let url = await getPicture(cleanText);
+                    return bot.sendPhoto(anwser.from.id, url);
+                }else{
+                    return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Day 🚩
+الرجاء كتابة يوم صحيح
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "spaceAR"}]
+                            ]
+                        }
+                    })
+                }
+            }else{
+                return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Month 🚩
+الرجاء كتابة شهر صحيح
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "spaceAR"}]
+                            ]
+                        }
+                    })
+            }
+        }else{
+            return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Year 🚩
+الرجاء كتابة سنة صحيحة
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "spaceAR"}]
+                            ]
+                        }
+                    })
+        }
+            })
+        });
     }
     if(msg.data == "spaceEN"){
         return bot.sendMessage(msg.from.id, `
@@ -151,7 +215,68 @@ Write your birthday day like this :
 
 Year-Month-Day
 ex : 2000-12-24
-        `)
+        `, {reply_markup: JSON.stringify({force_reply: true})}).then((replay) => {
+            bot.onReplyToMessage(replay.chat.id, replay.message_id, async (anwser) => {
+                anwser.text.toLowerCase();
+                let cleanText = anwser.text.replace(" ", "");
+        let regex = /[^0-9-]/gi
+        if(regex.test(cleanText)){
+            return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Date 🚩
+الرجاء كتابة تاريخ صحيح
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "spaceEN"}]
+                            ]
+                        }
+                    })
+        }
+
+        const arr = cleanText.split("-")
+        if(arr[0].length == 4 && (parseInt(arr[0]) < 2022)){
+            if((arr[1].length === 2 || arr[1].length === 1) && (parseInt(arr[1]) < 13)){
+                if((arr[2].length === 2 || arr[2].length === 1) && (parseInt(arr[2]) < 32)){
+                    let url = await getPicture(cleanText);
+                    return bot.sendPhoto(anwser.from.id, url);
+                }else{
+                    return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Day 🚩
+الرجاء كتابة يوم صحيح
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "spaceEN"}]
+                            ]
+                        }
+                    })
+                }
+            }else{
+                return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Month 🚩
+الرجاء كتابة شهر صحيح
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "spaceEN"}]
+                            ]
+                        }
+                    })
+            }
+        }else{
+            return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Year 🚩
+الرجاء كتابة سنة صحيحة
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "spaceEN"}]
+                            ]
+                        }
+                    })
+        }
+            })
+        })
     }
 
 
@@ -164,25 +289,72 @@ ex : 2000-12-24
 هذا الأمر يعرض حالة الجو في جميع المدن
 🌦🌦
 
+
+
 أكتب الأمر بالصيغة التالية :
 
-city : “المدينة”
-مثال : city : jeddah
+
+البحث بالأنقليزي فقط
+🌦🌦
+        `, {reply_markup: JSON.stringify({force_reply: true})}).then((replay) => {
+            bot.onReplyToMessage(replay.chat.id, replay.message_id, async (anwser) => {
+                let city = anwser.text.trim().split(" ").reverse()[0];
+        let result = await getWeather(city);
+        if(result == "404"){
+            return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid City 🚩
+الرجاء كتابة مدينة صحيحة
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "weatherAR"}]
+                            ]
+                        }
+                    })
+        }
+        return bot.sendMessage(anwser.from.id, `
+
+${result.name} , ${result.sys.country} 🏙
+____________________
+${parseInt(result.main.temp)} 🌡 • ${result.weather[0].main} ☁️ • ${result.wind.speed} 🍃
         `);
+            })
+            });
     }
     if(msg.data == "weatherEN"){
-        bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
-        return bot.sendMessage(msg.from.id, `
+        bot.sendMessage(msg.from.id, `
 〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
 
 This command is to check the weather in any city you want
+
+Write a city :
+
+
 🌦🌦
+        `, {reply_markup: JSON.stringify({force_reply: true})}).then((replay) => {
+            bot.onReplyToMessage(replay.chat.id, replay.message_id, async (anwser) => {
+                let city = anwser.text.trim().split(" ").reverse()[0];
+        let result = await getWeather(city);
+        if(result == "404"){
+            return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid City 🚩
+الرجاء كتابة مدينة صحيحة
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "weatherEN"}]
+                            ]
+                        }
+                    })
+        }
+        return bot.sendMessage(anwser.from.id, `
 
-Write a city like this :
-
-city : “city”
-ex : city : jeddah
+${result.name} , ${result.sys.country} 🏙
+____________________
+${parseInt(result.main.temp)} 🌡 • ${result.weather[0].main} ☁️ • ${result.wind.speed} 🍃
         `);
+            })
+            })
     }
 
 
@@ -232,29 +404,99 @@ Awards : ${random.Awards}
         return bot.sendMessage(msg.from.id, `
 〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
 
-أكتب أسم الفلم بالصيغة التالية :
+أكتب أسم الفلم :
 
-rating : "أسم الفلم" 
-مثال => rating : gravity
+
+
+🍿🍿  
+        `,{reply_markup: JSON.stringify({force_reply: true})}).then((replay) => {
+            bot.onReplyToMessage(replay.chat.id, replay.message_id, async (anwser) => {
+                anwser.text.toLowerCase();
+                let movie = anwser.text.trim().split(" ").reverse()[0];
+        let result = await getMovie(movie);
+        if(result == "404"){
+            return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Movie 🚩
+الرجاء كتابة فلم صحيح
+                                `, {
+                                    reply_markup: {
+                                        inline_keyboard: [
+                                            [{text: "🔙", callback_data: "ratingAR"}]
+                                        ]
+                                    }
+                                })
+        }
+        let here = await bot.sendPhoto(anwser.from.id, result.Poster);
+        return bot.sendMessage(anwser.from.id, `
+${result.Title} 🍿
+____________
+${result.Year} 🎥 • ${result.Runtime} ⏰ • ${result.Genre} 🎞
+            
+💫
+IMDB : ${result.imdbRating}
+Awards : ${result.Awards}
         `)
+            })
+        })
     }
     if(msg.data == "ratingEN"){
         bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
         return bot.sendMessage(msg.from.id, `
 〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
 
-Write the name of the movie like this :
+Write the name of the movie :
 
-rating : "movie name" 
-ex => rating : gravity
+
+
+🍿🍿  
+        `,{reply_markup: JSON.stringify({force_reply: true})}).then((replay) => {
+            bot.onReplyToMessage(replay.chat.id, replay.message_id, async (anwser) => {
+                anwser.text.toLowerCase();
+                let movie = anwser.text.trim().split(" ").reverse()[0];
+        let result = await getMovie(movie);
+        if(result == "404"){
+            return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Movie 🚩
+الرجاء كتابة فلم صحيح
+                                `, {
+                                    reply_markup: {
+                                        inline_keyboard: [
+                                            [{text: "🔙", callback_data: "ratingEN"}]
+                                        ]
+                                    }
+                                })
+        }
+        let here = await bot.sendPhoto(anwser.from.id, result.Poster);
+        return bot.sendMessage(anwser.from.id, `
+${result.Title} 🍿
+____________
+${result.Year} 🎥 • ${result.Runtime} ⏰ • ${result.Genre} 🎞
+            
+💫
+IMDB : ${result.imdbRating}
+Awards : ${result.Awards}
         `)
+            })
+        })
     }
 
 
     // photos
     if(msg.data == "photosAR"){
-        bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
-        return bot.sendMessage(msg.from.id, "هذا الأمر لعرض صور عشوائية أو بختيارك 📸📸", {
+        Pool.query(`SELECT attempt FROM users WHERE user_name = '${msg.from.username}'`, (err,result) => {
+            if(err){
+                console.log(err);
+            }
+
+            const attempt = result.rows[0].attempt;
+            bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
+        return bot.sendMessage(msg.from.id, `
+هذا الأمر لعرض صور عشوائية أو بختيارك 
+📸📸
+
+
+عدد المحاولات المتبقية : ${attempt} 
+        `, {
             reply_markup: {
                 inline_keyboard: [
                     [{text: "عشوائي", callback_data: "picker"}],
@@ -262,10 +504,23 @@ ex => rating : gravity
                 ]
             }
         })
+        })
     }
     if(msg.data == "photosEN"){
-        bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
-        return bot.sendMessage(msg.from.id, "This command is for showing random or specific photos 📸📸", {
+        Pool.query(`SELECT attempt FROM users WHERE user_name = '${msg.from.username}'`, (err,result) => {
+            if(err){
+                console.log(err);
+            }
+
+            var attempt = result.rows[0].attempt;
+            bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
+        return bot.sendMessage(msg.from.id, `
+This command is for showing random or specific photos 
+📸📸
+
+
+You have ${attempt} attempt left
+`, {
             reply_markup: {
                 inline_keyboard: [
                     [{text: "random", callback_data: "picker"}],
@@ -273,41 +528,252 @@ ex => rating : gravity
                 ]
             }
         })
+        })
     }
     if(msg.data == "picker"){
-        bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
-        let random = await getPhoto("random");
-        if(random == "404"){
-            return bot.sendMessage(msg.from.id, "Sorry try again");
+        Pool.query(`SELECT attempt FROM users WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+            if(err){
+                console.log(err);
+            }
+
+            if(result.rows[0].attempt == 0){
+                bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
+                return bot.sendMessage(msg.from.id, `
+🚩 Sorry you are out of attempts 🚩
+للاسف خلصت محاولاتك`, {
+                    reply_markup: {
+                        inline_keyboard: [
+                            [{text: "🔙", callback_data: "start"}]
+                        ]
+                    }
+                }); 
+            }else{
+                Pool.query(`UPDATE users SET attempt = attempt - 1 WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+                    if(err){
+                        console.log(err);
+                    }
+                })
+                bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
+                let random = await getPhoto("random");
+                if(random == "404"){
+                    return bot.sendMessage(msg.from.id, "Sorry try again", {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "start"}]
+                            ]
+                        }
+                    });
+                }
+                return bot.sendPhoto(msg.from.id, random);
+            }
+        })
+    }
+    if(msg.data == "catchAR"){
+        Pool.query(`SELECT attempt FROM users WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+            if(err){
+                console.log(err);
+            }
+
+            if(result.rows[0].attempt == 0){
+                bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
+                return bot.sendMessage(msg.from.id, `
+🚩 Sorry you are out of attempts 🚩
+للاسف خلصت محاولاتك`, {
+                    reply_markup: {
+                        inline_keyboard: [
+                            [{text: "🔙", callback_data: "photosAR"}]
+                        ]
+                    }
+                });
+            }else{
+                Pool.query(`UPDATE users SET attempt = attempt - 1 WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+                    if(err){
+                        console.log(err);
+                    }
+                })
+                bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
+        return bot.sendMessage(msg.from.id, `
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+
+أكتب أسم الفئة أو العنصر  :
+
+البحث بالأنقليزي فقط
+
+📸📸
+
+        `,{reply_markup: JSON.stringify({force_reply: true})}).then((replay) => {
+            bot.onReplyToMessage(replay.chat.id, replay.message_id, async (anwser) => {
+                anwser.text.toLowerCase();
+                let photos = anwser.text;
+        let result = await getPhoto(photos);
+        if(result == "404"){
+            return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Photos name 🚩
+الرجاء كتابة أسم أو عنصر صحيح
+                                `, {
+                                    reply_markup: {
+                                        inline_keyboard: [
+                                            [{text: "🔙", callback_data: "catchAR"}]
+                                        ]
+                                    }
+                                })
         }
-        return bot.sendPhoto(msg.from.id, random);
+        await bot.sendMessage(anwser.from.id, "Wait... ⏰")
+        await bot.sendPhoto(anwser.from.id, result[0].urls.small);
+        await bot.sendPhoto(anwser.from.id, result[1].urls.small);
+        await bot.sendPhoto(anwser.from.id, result[2].urls.small);
+        return bot.sendMessage(msg.from.id, "🤩🤩")
+            })
+        })
+            }
+        })
     }
-    if(msg.data == "catchAR"){
+    if(msg.data == "catchEN"){
+        Pool.query(`SELECT attempt FROM users WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+            if(err){
+                console.log(err);
+            }
+
+            if(result.rows[0].attempt == 0){
+                bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
+                return bot.sendMessage(msg.from.id, `
+🚩 Sorry you are out of attempts 🚩
+للاسف خلصت محاولاتك`, {
+                    reply_markup: {
+                        inline_keyboard: [
+                            [{text: "🔙", callback_data: "photosAR"}]
+                        ]
+                    }
+                });
+            }else{
+                Pool.query(`UPDATE users SET attempt = attempt - 1 WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+                    if(err){
+                        console.log(err);
+                    }
+                })
+                bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
         return bot.sendMessage(msg.from.id, `
 〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
 
-أكتب أسم الفئة أو العنصر بالصيغة التالية :
 
-show : "الفئة أو العنصر" 
-ex => show : cars
-        `)
+Write the name of the photos :
+
+
+📸📸
+
+        `,{reply_markup: JSON.stringify({force_reply: true})}).then((replay) => {
+            bot.onReplyToMessage(replay.chat.id, replay.message_id, async (anwser) => {
+                anwser.text.toLowerCase();
+                let photos = anwser.text;
+        let result = await getPhoto(photos);
+        if(result == "404"){
+            return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Photos name 🚩
+الرجاء كتابة أسم أو عنصر صحيح
+                                `, {
+                                    reply_markup: {
+                                        inline_keyboard: [
+                                            [{text: "🔙", callback_data: "catchEN"}]
+                                        ]
+                                    }
+                                })
+        }
+        await bot.sendMessage(anwser.from.id, "Wait... ⏰")
+        await bot.sendPhoto(anwser.from.id, result[0].urls.small);
+        await bot.sendPhoto(anwser.from.id, result[1].urls.small);
+        await bot.sendPhoto(anwser.from.id, result[2].urls.small);
+        return bot.sendMessage(msg.from.id, "🤩🤩")
+            })
+        })
+            }
+        })
+        
     }
-    if(msg.data == "catchAR"){
-        bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
+    if(msg.data == "catch"){
+        Pool.query(`SELECT attempt FROM users WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+            if(err){
+                console.log(err);
+            }
+
+            if(result.rows[0].attempt == 0){
+                bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
+                return bot.sendMessage(msg.from.id, `
+🚩 Sorry you are out of attempts 🚩
+للاسف خلصت محاولاتك`, {
+                    reply_markup: {
+                        inline_keyboard: [
+                            [{text: "🔙", callback_data: "photosAR"}]
+                        ]
+                    }
+                });
+            }else{
+                Pool.query(`UPDATE users SET attempt = attempt - 1 WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+                    if(err){
+                        console.log(err);
+                    }
+                })
+                bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
         return bot.sendMessage(msg.from.id, `
 〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
 
-Write the name of the photos like this :
 
-show : "photos name" 
-ex => show : cars
-        `)
+Write the name of the photos :
+
+
+📸📸
+
+        `,{reply_markup: JSON.stringify({force_reply: true})}).then((replay) => {
+            bot.onReplyToMessage(replay.chat.id, replay.message_id, async (anwser) => {
+                anwser.text.toLowerCase();
+                let photos = anwser.text;
+        let result = await getPhoto(photos);
+        if(result == "404"){
+            return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Photos name 🚩
+الرجاء كتابة أسم أو عنصر صحيح
+                                `, {
+                                    reply_markup: {
+                                        inline_keyboard: [
+                                            [{text: "🔙", callback_data: "catchEN"}]
+                                        ]
+                                    }
+                                })
+        }
+        await bot.sendMessage(anwser.from.id, "Wait... ⏰")
+        await bot.sendPhoto(anwser.from.id, result[0].urls.small);
+        await bot.sendPhoto(anwser.from.id, result[1].urls.small);
+        await bot.sendPhoto(anwser.from.id, result[2].urls.small);
+        return bot.sendMessage(msg.from.id, "🤩🤩")
+            })
+        })
+            }
+        })
+        
     }
 })
 
 // start
 bot.onText(/\/start/,  async (msg) => {
-    bot.sendMessage(msg.from.id, `
+    Pool.query(`SELECT * FROM users WHERE user_name = '${msg.from.username}';`, (err,result) => {
+        if(err){
+            console.log(err);
+        }
+
+        if(result.rows.length == 0){
+            Pool.query(`INSERT INTO users VALUES ('${msg.from.username}', 2,1);`, (error, good) => {
+                if(error){
+                    console.log(error);
+                }
+            })
+        }else{
+            Pool.query(`UPDATE users SET visits = visits + 1 WHERE user_name = '${msg.from.username}';`, (err, result) => {
+                if(err){
+                    console.log(err);
+                }
+            })
+        }
+    });
+    return bot.sendMessage(msg.from.id, `
         🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆🎆 
 `, {
     reply_markup: {
@@ -344,24 +810,109 @@ This command is showing you picture of space taken in the same day as your birth
 Write your birthday day like this :
 
 Year-Month-Day
-ex : 2000-12-24
-        `)
+2000-12-24
+
+
+        `, {reply_markup: JSON.stringify({force_reply: true})}).then((replay) => {
+            bot.onReplyToMessage(replay.chat.id, replay.message_id, async (anwser) => {
+                anwser.text.toLowerCase();
+                let cleanText = anwser.text.replace(" ", "");
+        let regex = /[^0-9-]/gi
+        if(regex.test(cleanText)){
+            return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Date 🚩
+الرجاء كتابة تاريخ صحيح
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "spaceBack"}]
+                            ]
+                        }
+                    })
+        }
+
+        const arr = cleanText.split("-")
+        if(arr[0].length == 4 && (parseInt(arr[0]) < 2022)){
+            if((arr[1].length === 2 || arr[1].length === 1) && (parseInt(arr[1]) < 13)){
+                if((arr[2].length === 2 || arr[2].length === 1) && (parseInt(arr[2]) < 32)){
+                    let url = await getPicture(cleanText);
+                    bot.sendPhoto(anwser.from.id, url);
+                }else{
+                    return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Day 🚩
+الرجاء كتابة يوم صحيح
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "spaceBack"}]
+                            ]
+                        }
+                    })
+                }
+            }else{
+                return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Month 🚩
+الرجاء كتابة شهر صحيح
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "spaceBack"}]
+                            ]
+                        }
+                    })
+            }
+        }else{
+            return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid Year 🚩
+الرجاء كتابة سنة صحيحة
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "spaceBack"}]
+                            ]
+                        }
+                    })
+        }
+            })
+        })
 })
 
 // weather
 bot.onText(/\/weather/, async(msg) => {
-    return bot.sendMessage(msg.from.id, `
+    bot.sendMessage(msg.from.id, `
 〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
 
 This command is to check the weather in any city you want
+
+Write a city :
+
+
 🌦🌦
+        `, {reply_markup: JSON.stringify({force_reply: true})}).then((replay) => {
+            bot.onReplyToMessage(replay.chat.id, replay.message_id, async (anwser) => {
+                let city = anwser.text.trim().split(" ").reverse()[0];
+        let result = await getWeather(city);
+        if(result == "404"){
+            return bot.sendMessage(anwser.from.id, `
+🚩 Please Write Valid City 🚩
+الرجاء كتابة مدينة صحيحة
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "weatherBack"}]
+                            ]
+                        }
+                    })
+        }
+        return bot.sendMessage(anwser.from.id, `
 
-Write a city like this :
-
-city : “city”
-ex : city : jeddah
+${result.name} , ${result.sys.country} 🏙
+____________________
+${parseInt(result.main.temp)} 🌡 • ${result.weather[0].main} ☁️ • ${result.wind.speed} 🍃
         `);
-})
+            })
+            })
+});
 
 // movies
 bot.onText(/\/movies/, async (msg) => {
@@ -391,154 +942,17 @@ bot.onText(/\/photos/, async(msg) => {
 
 
 bot.on("message", async (msg) => {
-
+    msg.text.toLowerCase();
     // Space 
-    if(msg.text.includes("-")){
-        let cleanText = msg.text.replace(" ", "");
-        let regex = /[^0-9-]/gi
-        if(regex.test(cleanText)){
-            return bot.sendMessage(msg.from.id, `
-🚩 Please Write Valid Date 🚩
-الرجاء كتابة تاريخ صحيح
-                    `, {
-                        reply_markup: {
-                            inline_keyboard: [
-                                [{text: "🔙", callback_data: "start"}]
-                            ]
-                        }
-                    })
-        }
-
-        const arr = cleanText.split("-")
-        if(arr[0].length == 4 && (parseInt(arr[0]) < 2022)){
-            if((arr[1].length === 2 || arr[1].length === 1) && (parseInt(arr[1]) < 13)){
-                if((arr[2].length === 2 || arr[2].length === 1) && (parseInt(arr[2]) < 32)){
-                    let url = await getPicture(cleanText);
-                    bot.sendPhoto(msg.from.id, url);
-                }else{
-                    return bot.sendMessage(msg.from.id, `
-🚩 Please Write Valid Day 🚩
-الرجاء كتابة يوم صحيح
-                    `, {
-                        reply_markup: {
-                            inline_keyboard: [
-                                [{text: "🔙", callback_data: "start"}]
-                            ]
-                        }
-                    })
-                }
-            }else{
-                return bot.sendMessage(msg.from.id, `
-🚩 Please Write Valid Month 🚩
-الرجاء كتابة شهر صحيح
-                    `, {
-                        reply_markup: {
-                            inline_keyboard: [
-                                [{text: "🔙", callback_data: "start"}]
-                            ]
-                        }
-                    })
-            }
-        }else{
-            return bot.sendMessage(msg.from.id, `
-🚩 Please Write Valid Year 🚩
-الرجاء كتابة سنة صحيحة
-                    `, {
-                        reply_markup: {
-                            inline_keyboard: [
-                                [{text: "🔙", callback_data: "start"}]
-                            ]
-                        }
-                    })
-        }
-    }
-
-
-
     // Weather 
-    if(msg.text.includes("city")){
-        let city = msg.text.trim().split(" ").reverse()[0];
-        let result = await getWeather(city);
-        if(result == "404"){
-            return bot.sendMessage(msg.from.id, `
-🚩 Please Write Valid City 🚩
-الرجاء كتابة مدينة صحيحة
-                    `, {
-                        reply_markup: {
-                            inline_keyboard: [
-                                [{text: "🔙", callback_data: "start"}]
-                            ]
-                        }
-                    })
-        }
-        return bot.sendMessage(msg.from.id, `
-
-${result.name} , ${result.sys.country} 🏙
-____________________
-${parseInt(result.main.temp)} 🌡 • ${result.weather[0].main} ☁️ • ${result.wind.speed} 🍃
-        `);
-    }
-
-
-
     // Movies 
-    if(msg.text.includes("rating")){
-        let movie = msg.text.trim().split(" ").reverse()[0];
-        let result = await getMovie(movie);
-        if(result == "404"){
-            return bot.sendMessage(msg.from.id, `
-🚩 Please Write Valid Movie 🚩
-الرجاء كتابة فلم صحيح
-                                `, {
-                                    reply_markup: {
-                                        inline_keyboard: [
-                                            [{text: "🔙", callback_data: "start"}]
-                                        ]
-                                    }
-                                })
-        }
-        let here = await bot.sendPhoto(msg.from.id, result.Poster);
-        return bot.sendMessage(msg.from.id, `
-${result.Title} 🍿
-____________
-${result.Year} 🎥 • ${result.Runtime} ⏰ • ${result.Genre} 🎞
-            
-💫
-IMDB : ${result.imdbRating}
-Awards : ${result.Awards}
-        `)
-    }
-
-
-
     // Photos
-    if(msg.text.includes("show")){
-        let photos = msg.text.trim().split(" ").reverse()[0];
-        let result = await getPhoto(photos);
-        if(result == "404"){
-            return bot.sendMessage(msg.from.id, `
-🚩 Please Write Valid Photos name 🚩
-الرجاء كتابة أسم أو عنصر صحيح
-                                `, {
-                                    reply_markup: {
-                                        inline_keyboard: [
-                                            [{text: "🔙", callback_data: "start"}]
-                                        ]
-                                    }
-                                })
-        }
-        await bot.sendMessage(msg.from.id, "Wait... ⏰")
-        await bot.sendPhoto(msg.from.id, result[0].urls.small);
-        await bot.sendPhoto(msg.from.id, result[1].urls.small);
-        await bot.sendPhoto(msg.from.id, result[2].urls.small);
-        return bot.sendMessage(msg.from.id, "🤩🤩")
-    }
-
     //
 })
 
 app.get("/", (req,res) => {
     return res.render("main");
 });
+
 
 app.listen(PORT, err => err ? console.log(err) : console.log("listening on PORT : " + PORT))
