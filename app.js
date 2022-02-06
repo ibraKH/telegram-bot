@@ -101,10 +101,10 @@ bot.on("callback_query", async (msg) => {
         return bot.sendMessage(msg.from.id, `⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️`, {
             reply_markup: {
                 inline_keyboard: [
-                    [{text: "space 🔭", callback_data: "spaceAR"}],
-                    [{text: "weather 🌦", callback_data: "weatherAR"}],
-                    [{text: "movies 🍿", callback_data: "moviesAR"}],
-                    [{text: "photos 📸", callback_data: "photosAR"}],
+                    [{text: "الفضاء 🔭", callback_data: "spaceAR"}],
+                    [{text: "الطقس 🌦", callback_data: "weatherAR"}],
+                    [{text: "الأفلام 🍿", callback_data: "moviesAR"}],
+                    [{text: "الصور 📸", callback_data: "photosAR"}],
                 ]
             }
         })
