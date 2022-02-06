@@ -7,7 +7,7 @@ import path from 'path'
 
 
 
-// web
+// website
 let app = express();
 const PORT = process.env.PORT || 3009
 app.set("view engine", "ejs");
@@ -60,7 +60,7 @@ bot.on("callback_query", async (msg) => {
         
 
         📓 هذا البوت تجريبي 📓
-
+        📓   أكثر من 4 api   📓
 
         
         `, {
@@ -82,7 +82,7 @@ bot.on("callback_query", async (msg) => {
         
 
         📓 this bot is demo  📓
-
+        📓      4 apis...    📓
 
         
         `, {
@@ -162,7 +162,16 @@ bot.on("callback_query", async (msg) => {
             if((arr[1].length === 2 || arr[1].length === 1) && (parseInt(arr[1]) < 13)){
                 if((arr[2].length === 2 || arr[2].length === 1) && (parseInt(arr[2]) < 32)){
                     let url = await getPicture(cleanText);
-                    return bot.sendPhoto(anwser.from.id, url);
+                    await bot.sendPhoto(anwser.from.id, url);
+                    return bot.sendMessage(anwser.from.id, `
+الأوامر
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "commandAR"}]
+                            ]
+                        }
+                    })
                 }else{
                     return bot.sendMessage(anwser.from.id, `
 🚩 Please Write Valid Day 🚩
@@ -238,7 +247,16 @@ ex : 2000-12-24
             if((arr[1].length === 2 || arr[1].length === 1) && (parseInt(arr[1]) < 13)){
                 if((arr[2].length === 2 || arr[2].length === 1) && (parseInt(arr[2]) < 32)){
                     let url = await getPicture(cleanText);
-                    return bot.sendPhoto(anwser.from.id, url);
+                    await bot.sendPhoto(anwser.from.id, url);
+                    return bot.sendMessage(msg.from.id, `
+commands
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "commandEN"}]
+                            ]
+                        }
+                    })
                 }else{
                     return bot.sendMessage(anwser.from.id, `
 🚩 Please Write Valid Day 🚩
@@ -294,7 +312,6 @@ ex : 2000-12-24
 أكتب الأمر بالصيغة التالية :
 
 
-البحث بالأنقليزي فقط
 🌦🌦
         `, {reply_markup: JSON.stringify({force_reply: true})}).then((replay) => {
             bot.onReplyToMessage(replay.chat.id, replay.message_id, async (anwser) => {
@@ -312,12 +329,21 @@ ex : 2000-12-24
                         }
                     })
         }
-        return bot.sendMessage(anwser.from.id, `
+        bot.sendMessage(anwser.from.id, `
 
 ${result.name} , ${result.sys.country} 🏙
 ____________________
 ${parseInt(result.main.temp)} 🌡 • ${result.weather[0].main} ☁️ • ${result.wind.speed} 🍃
         `);
+        return bot.sendMessage(anwser.from.id, `
+الأوامر
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "commandAR"}]
+                            ]
+                        }
+                    })
             })
             });
     }
@@ -347,12 +373,21 @@ Write a city :
                         }
                     })
         }
-        return bot.sendMessage(anwser.from.id, `
+        await bot.sendMessage(anwser.from.id, `
 
 ${result.name} , ${result.sys.country} 🏙
 ____________________
 ${parseInt(result.main.temp)} 🌡 • ${result.weather[0].main} ☁️ • ${result.wind.speed} 🍃
         `);
+        return bot.sendMessage(msg.from.id, `
+commands
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "commandEN"}]
+                            ]
+                        }
+                    })
             })
             })
     }
@@ -388,8 +423,8 @@ This command is for showing movies and their rating 🍿🍿
     if(msg.data == "randomMovie"){
         bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
         let random = await getMovie("random");
-        let here = await bot.sendPhoto(msg.from.id, random.Poster);
-        return bot.sendMessage(msg.from.id, `
+        await bot.sendPhoto(msg.from.id, random.Poster);
+        await bot.sendMessage(msg.from.id, `
 ${random.Title} 🍿
 ____________
 ${random.Year} 🎥 • ${random.Runtime} ⏰ • ${random.Genre} 🎞
@@ -398,6 +433,16 @@ ${random.Year} 🎥 • ${random.Runtime} ⏰ • ${random.Genre} 🎞
 IMDB : ${random.imdbRating}
 Awards : ${random.Awards}
         `)
+        return bot.sendMessage(msg.from.id, `
+Back 🔙
+العودة 🔙
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "start"}]
+                            ]
+                        }
+                    })
     }
     if(msg.data == "ratingAR"){
         bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
@@ -407,7 +452,7 @@ Awards : ${random.Awards}
 أكتب أسم الفلم :
 
 
-
+البحث بالأنقليزي فقط!
 🍿🍿  
         `,{reply_markup: JSON.stringify({force_reply: true})}).then((replay) => {
             bot.onReplyToMessage(replay.chat.id, replay.message_id, async (anwser) => {
@@ -426,8 +471,8 @@ Awards : ${random.Awards}
                                     }
                                 })
         }
-        let here = await bot.sendPhoto(anwser.from.id, result.Poster);
-        return bot.sendMessage(anwser.from.id, `
+        await bot.sendPhoto(anwser.from.id, result.Poster);
+        await bot.sendMessage(anwser.from.id, `
 ${result.Title} 🍿
 ____________
 ${result.Year} 🎥 • ${result.Runtime} ⏰ • ${result.Genre} 🎞
@@ -436,6 +481,15 @@ ${result.Year} 🎥 • ${result.Runtime} ⏰ • ${result.Genre} 🎞
 IMDB : ${result.imdbRating}
 Awards : ${result.Awards}
         `)
+        return bot.sendMessage(anwser.from.id, `
+الأوامر
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "commandAR"}]
+                            ]
+                        }
+                    })
             })
         })
     }
@@ -466,8 +520,8 @@ Write the name of the movie :
                                     }
                                 })
         }
-        let here = await bot.sendPhoto(anwser.from.id, result.Poster);
-        return bot.sendMessage(anwser.from.id, `
+        await bot.sendPhoto(anwser.from.id, result.Poster);
+        await bot.sendMessage(anwser.from.id, `
 ${result.Title} 🍿
 ____________
 ${result.Year} 🎥 • ${result.Runtime} ⏰ • ${result.Genre} 🎞
@@ -476,6 +530,15 @@ ${result.Year} 🎥 • ${result.Runtime} ⏰ • ${result.Genre} 🎞
 IMDB : ${result.imdbRating}
 Awards : ${result.Awards}
         `)
+        return bot.sendMessage(msg.from.id, `
+commands
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "commandEN"}]
+                            ]
+                        }
+                    })
             })
         })
     }
@@ -564,7 +627,17 @@ You have ${attempt} attempt left
                         }
                     });
                 }
-                return bot.sendPhoto(msg.from.id, random);
+                await bot.sendPhoto(msg.from.id, random);
+                return bot.sendMessage(msg.from.id, `
+Back 🔙
+العودة 🔙
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "start"}]
+                            ]
+                        }
+                    })
             }
         })
     }
@@ -592,7 +665,7 @@ You have ${attempt} attempt left
                     }
                 })
                 bot.deleteMessage(msg.message.chat.id, msg.message.message_id);
-        return bot.sendMessage(msg.from.id, `
+                await bot.sendMessage(msg.from.id, `
 〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
 
 أكتب أسم الفئة أو العنصر  :
@@ -622,7 +695,16 @@ You have ${attempt} attempt left
         await bot.sendPhoto(anwser.from.id, result[0].urls.small);
         await bot.sendPhoto(anwser.from.id, result[1].urls.small);
         await bot.sendPhoto(anwser.from.id, result[2].urls.small);
-        return bot.sendMessage(msg.from.id, "🤩🤩")
+        await bot.sendMessage(msg.from.id, "🤩🤩")
+        return bot.sendMessage(anwser.from.id, `
+الأوامر
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "commandAR"}]
+                            ]
+                        }
+                    })
             })
         })
             }
@@ -682,7 +764,16 @@ Write the name of the photos :
         await bot.sendPhoto(anwser.from.id, result[0].urls.small);
         await bot.sendPhoto(anwser.from.id, result[1].urls.small);
         await bot.sendPhoto(anwser.from.id, result[2].urls.small);
-        return bot.sendMessage(msg.from.id, "🤩🤩")
+        await bot.sendMessage(msg.from.id, "🤩🤩")
+        return bot.sendMessage(msg.from.id, `
+commands
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "commandEN"}]
+                            ]
+                        }
+                    })
             })
         })
             }
@@ -743,7 +834,16 @@ Write the name of the photos :
         await bot.sendPhoto(anwser.from.id, result[0].urls.small);
         await bot.sendPhoto(anwser.from.id, result[1].urls.small);
         await bot.sendPhoto(anwser.from.id, result[2].urls.small);
-        return bot.sendMessage(msg.from.id, "🤩🤩")
+        await bot.sendMessage(msg.from.id, "🤩🤩")
+        return bot.sendMessage(msg.from.id, `
+commands
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "commandEN"}]
+                            ]
+                        }
+                    })
             })
         })
             }
@@ -836,7 +936,16 @@ Year-Month-Day
             if((arr[1].length === 2 || arr[1].length === 1) && (parseInt(arr[1]) < 13)){
                 if((arr[2].length === 2 || arr[2].length === 1) && (parseInt(arr[2]) < 32)){
                     let url = await getPicture(cleanText);
-                    bot.sendPhoto(anwser.from.id, url);
+                    await bot.sendPhoto(anwser.from.id, url);
+                    return bot.sendMessage(msg.from.id, `
+commands
+                    `, {
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{text: "🔙", callback_data: "commandEN"}]
+                            ]
+                        }
+                    })
                 }else{
                     return bot.sendMessage(anwser.from.id, `
 🚩 Please Write Valid Day 🚩
