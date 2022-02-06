@@ -144,7 +144,7 @@ bot.on("callback_query", async (msg) => {
                 anwser.text.toLowerCase();
                 let cleanText = anwser.text.replace(" ", "");
         let regex = /[^0-9-]/gi
-        if(regex.test(cleanText)){
+        if(regex.test(cleanText) || (!anwser.text.includes("-"))){
             return bot.sendMessage(anwser.from.id, `
 🚩 Please Write Valid Date 🚩
 الرجاء كتابة تاريخ صحيح
@@ -229,7 +229,7 @@ ex : 2000-12-24
                 anwser.text.toLowerCase();
                 let cleanText = anwser.text.replace(" ", "");
         let regex = /[^0-9-]/gi
-        if(regex.test(cleanText)){
+        if(regex.test(cleanText) || (!anwser.text.includes("-"))){
             return bot.sendMessage(anwser.from.id, `
 🚩 Please Write Valid Date 🚩
 الرجاء كتابة تاريخ صحيح
@@ -309,7 +309,7 @@ commands
 
 
 
-أكتب الأمر بالصيغة التالية :
+أكتب أسم المدينة  :
 
 
 🌦🌦
@@ -329,7 +329,7 @@ commands
                         }
                     })
         }
-        bot.sendMessage(anwser.from.id, `
+        await bot.sendMessage(anwser.from.id, `
 
 ${result.name} , ${result.sys.country} 🏙
 ____________________
