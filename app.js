@@ -43,8 +43,8 @@ bot.on("callback_query", async (msg) => {
 `, {
     reply_markup: {
         inline_keyboard: [
-            [{text: "عربي", callback_data: "ar"}],
-            [{text: "English", callback_data: "en"}],
+            [{text: "🔹عربي 🔹", callback_data: "ar"}],
+            [{text: "🔹 English 🔹", callback_data: "en"}],
         ]
     }
 })
@@ -66,7 +66,7 @@ bot.on("callback_query", async (msg) => {
         `, {
             reply_markup: {
                 inline_keyboard: [
-                    [{text: "الأوامر", callback_data : "commandAR"}]
+                    [{text: "🔹 الأوامر 🔹", callback_data : "commandAR"}]
                 ]
             }
         })
@@ -88,7 +88,7 @@ bot.on("callback_query", async (msg) => {
         `, {
             reply_markup: {
                 inline_keyboard: [
-                    [{text: "commands", callback_data : "commandEN"}]
+                    [{text: "🔹 commands 🔹", callback_data : "commandEN"}]
                 ]
             }
         })
@@ -101,10 +101,10 @@ bot.on("callback_query", async (msg) => {
         return bot.sendMessage(msg.from.id, `⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️`, {
             reply_markup: {
                 inline_keyboard: [
-                    [{text: "الفضاء 🔭", callback_data: "spaceAR"}],
-                    [{text: "الطقس 🌦", callback_data: "weatherAR"}],
-                    [{text: "الأفلام 🍿", callback_data: "moviesAR"}],
-                    [{text: "الصور 📸", callback_data: "photosAR"}],
+                    [{text: "🔹 الفضاء 🔭", callback_data: "spaceAR"}],
+                    [{text: "🔹 الطقس 🌦", callback_data: "weatherAR"}],
+                    [{text: "🔹 الأفلام 🍿", callback_data: "moviesAR"}],
+                    [{text: "🔹 الصور 📸", callback_data: "photosAR"}],
                 ]
             }
         })
@@ -114,10 +114,10 @@ bot.on("callback_query", async (msg) => {
         return bot.sendMessage(msg.from.id, `⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️`, {
             reply_markup: {
                 inline_keyboard: [
-                    [{text: "space 🔭", callback_data: "spaceEN"}],
-                    [{text: "weather 🌦", callback_data: "weatherEN"}],
-                    [{text: "movies 🍿", callback_data: "moviesEN"}],
-                    [{text: "photos 📸", callback_data: "photosEN"}],
+                    [{text: "🔹 space 🔭", callback_data: "spaceEN"}],
+                    [{text: "🔹 weather 🌦", callback_data: "weatherEN"}],
+                    [{text: "🔹 movies 🍿", callback_data: "moviesEN"}],
+                    [{text: "🔹 photos 📸", callback_data: "photosEN"}],
                 ]
             }
         })
@@ -151,7 +151,7 @@ bot.on("callback_query", async (msg) => {
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "spaceAR"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "spaceAR"}]
                             ]
                         }
                     })
@@ -168,7 +168,7 @@ bot.on("callback_query", async (msg) => {
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "commandAR"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "commandAR"}]
                             ]
                         }
                     })
@@ -179,7 +179,7 @@ bot.on("callback_query", async (msg) => {
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "spaceAR"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "spaceAR"}]
                             ]
                         }
                     })
@@ -191,7 +191,7 @@ bot.on("callback_query", async (msg) => {
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "spaceAR"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "spaceAR"}]
                             ]
                         }
                     })
@@ -203,7 +203,7 @@ bot.on("callback_query", async (msg) => {
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "spaceAR"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "spaceAR"}]
                             ]
                         }
                     })
@@ -236,7 +236,7 @@ ex : 2000-12-24
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "spaceEN"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "spaceEN"}]
                             ]
                         }
                     })
@@ -253,7 +253,7 @@ commands
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "commandEN"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "commandEN"}]
                             ]
                         }
                     })
@@ -264,7 +264,7 @@ commands
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "spaceEN"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "spaceEN"}]
                             ]
                         }
                     })
@@ -276,7 +276,7 @@ commands
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "spaceEN"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "spaceEN"}]
                             ]
                         }
                     })
@@ -288,7 +288,7 @@ commands
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "spaceEN"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "spaceEN"}]
                             ]
                         }
                     })
@@ -324,7 +324,7 @@ commands
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "weatherAR"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "weatherAR"}]
                             ]
                         }
                     })
@@ -340,7 +340,7 @@ ${parseInt(result.main.temp)} 🌡 • ${result.weather[0].main} ☁️ • ${re
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "commandAR"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "commandAR"}]
                             ]
                         }
                     })
@@ -368,7 +368,7 @@ Write a city :
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "weatherEN"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "weatherEN"}]
                             ]
                         }
                     })
@@ -384,7 +384,7 @@ commands
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "commandEN"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "commandEN"}]
                             ]
                         }
                     })
@@ -401,8 +401,8 @@ commands
     `,{
         reply_markup: {
             inline_keyboard: [
-                [{text: "أختر عشوائي", callback_data: "randomMovie"}],
-                [{text: "عرض التقييم", callback_data: "ratingAR"}]
+                [{text: "🔹 أختر عشوائي 🔹", callback_data: "randomMovie"}],
+                [{text: "🔹 عرض التقييم 🔹", callback_data: "ratingAR"}]
             ]
         }
     })
@@ -414,8 +414,8 @@ This command is for showing movies and their rating 🍿🍿
     `,{
         reply_markup: {
             inline_keyboard: [
-                [{text: "Get Random Movie", callback_data: "randomMovie"}],
-                [{text: "Get the rates of a movie", callback_data: "ratingEN"}]
+                [{text: "🔹 Get Random Movie 🔹", callback_data: "randomMovie"}],
+                [{text: "🔹 Get the rates of a movie 🔹", callback_data: "ratingEN"}]
             ]
         }
     })
@@ -439,7 +439,7 @@ Back 🔙
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "start"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "start"}]
                             ]
                         }
                     })
@@ -466,7 +466,7 @@ Back 🔙
                                 `, {
                                     reply_markup: {
                                         inline_keyboard: [
-                                            [{text: "🔙", callback_data: "ratingAR"}]
+                                            [{text: "🔸 🔙 🔸", callback_data: "ratingAR"}]
                                         ]
                                     }
                                 })
@@ -486,7 +486,7 @@ Awards : ${result.Awards}
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "commandAR"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "commandAR"}]
                             ]
                         }
                     })
@@ -515,7 +515,7 @@ Write the name of the movie :
                                 `, {
                                     reply_markup: {
                                         inline_keyboard: [
-                                            [{text: "🔙", callback_data: "ratingEN"}]
+                                            [{text: "🔸 🔙 🔸", callback_data: "ratingEN"}]
                                         ]
                                     }
                                 })
@@ -535,7 +535,7 @@ commands
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "commandEN"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "commandEN"}]
                             ]
                         }
                     })
@@ -566,8 +566,8 @@ commands
         `, {
             reply_markup: {
                 inline_keyboard: [
-                    [{text: "عشوائي", callback_data: "picker"}],
-                    [{text: "أختر فئة أو عنصر", callback_data: "catchAR"}]
+                    [{text: "🔹 عشوائي 🔹", callback_data: "picker"}],
+                    [{text: "🔹 أختر فئة أو عنصر 🔹", callback_data: "catchAR"}]
                 ]
             }
         })
@@ -594,8 +594,8 @@ You have ${attempt} attempt left
 `, {
             reply_markup: {
                 inline_keyboard: [
-                    [{text: "random", callback_data: "picker"}],
-                    [{text: "specific", callback_data: "catchEN"}]
+                    [{text: "🔹 random 🔹", callback_data: "picker"}],
+                    [{text: "🔹 specific 🔹", callback_data: "catchEN"}]
                 ]
             }
         })
@@ -618,7 +618,7 @@ You have ${attempt} attempt left
 للاسف خلصت محاولاتك`, {
                     reply_markup: {
                         inline_keyboard: [
-                            [{text: "🔙", callback_data: "start"}]
+                            [{text: "🔸 🔙 🔸", callback_data: "start"}]
                         ]
                     }
                 }); 
@@ -634,7 +634,7 @@ You have ${attempt} attempt left
                     return bot.sendMessage(msg.from.id, "Sorry try again", {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "start"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "start"}]
                             ]
                         }
                     });
@@ -646,7 +646,7 @@ Back 🔙
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "start"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "start"}]
                             ]
                         }
                     })
@@ -670,7 +670,7 @@ Back 🔙
 للاسف خلصت محاولاتك`, {
                     reply_markup: {
                         inline_keyboard: [
-                            [{text: "🔙", callback_data: "photosAR"}]
+                            [{text: "🔸 🔙 🔸", callback_data: "photosAR"}]
                         ]
                     }
                 });
@@ -702,7 +702,7 @@ Back 🔙
                                 `, {
                                     reply_markup: {
                                         inline_keyboard: [
-                                            [{text: "🔙", callback_data: "catchAR"}]
+                                            [{text: "🔸 🔙 🔸", callback_data: "catchAR"}]
                                         ]
                                     }
                                 })
@@ -717,7 +717,7 @@ Back 🔙
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "commandAR"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "commandAR"}]
                             ]
                         }
                     })
@@ -743,7 +743,7 @@ Back 🔙
 للاسف خلصت محاولاتك`, {
                     reply_markup: {
                         inline_keyboard: [
-                            [{text: "🔙", callback_data: "photosAR"}]
+                            [{text: "🔸 🔙 🔸", callback_data: "photosAR"}]
                         ]
                     }
                 });
@@ -775,7 +775,7 @@ Write the name of the photos :
                                 `, {
                                     reply_markup: {
                                         inline_keyboard: [
-                                            [{text: "🔙", callback_data: "catchEN"}]
+                                            [{text: "🔸 🔙 🔸", callback_data: "catchEN"}]
                                         ]
                                     }
                                 })
@@ -790,7 +790,7 @@ commands
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "commandEN"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "commandEN"}]
                             ]
                         }
                     })
@@ -817,7 +817,7 @@ commands
 للاسف خلصت محاولاتك`, {
                     reply_markup: {
                         inline_keyboard: [
-                            [{text: "🔙", callback_data: "photosAR"}]
+                            [{text: "🔸 🔙 🔸", callback_data: "photosAR"}]
                         ]
                     }
                 });
@@ -849,7 +849,7 @@ Write the name of the photos :
                                 `, {
                                     reply_markup: {
                                         inline_keyboard: [
-                                            [{text: "🔙", callback_data: "catchEN"}]
+                                            [{text: "🔸 🔙 🔸", callback_data: "catchEN"}]
                                         ]
                                     }
                                 })
@@ -864,7 +864,7 @@ commands
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "commandEN"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "commandEN"}]
                             ]
                         }
                     })
@@ -906,8 +906,8 @@ bot.onText(/\/start/,  async (msg) => {
 `, {
     reply_markup: {
         inline_keyboard: [
-            [{text: "عربي", callback_data: "ar"}],
-            [{text: "English", callback_data: "en"}],
+            [{text: "🔹 عربي 🔹", callback_data: "ar"}],
+            [{text: "🔹 English 🔹", callback_data: "en"}],
         ]
     }
 })
@@ -918,10 +918,10 @@ bot.onText(/\/command/, async (msg) => {
     return bot.sendMessage(msg.from.id, `⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️`, {
             reply_markup: {
                 inline_keyboard: [
-                    [{text: "space 🔭", callback_data: "space"}],
-                    [{text: "weather 🌦", callback_data: "weather"}],
-                    [{text: "movies 🍿", callback_data: "movies"}],
-                    [{text: "photos 📸", callback_data: "photos"}],
+                    [{text: "🔹 space 🔭", callback_data: "space"}],
+                    [{text: "🔹 weather 🌦", callback_data: "weather"}],
+                    [{text: "🔹 movies 🍿", callback_data: "movies"}],
+                    [{text: "🔹 photos 📸", callback_data: "photos"}],
                 ]
             }
         })
@@ -953,7 +953,7 @@ Year-Month-Day
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "spaceBack"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "spaceBack"}]
                             ]
                         }
                     })
@@ -970,7 +970,7 @@ commands
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "commandEN"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "commandEN"}]
                             ]
                         }
                     })
@@ -981,7 +981,7 @@ commands
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "spaceBack"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "spaceBack"}]
                             ]
                         }
                     })
@@ -993,7 +993,7 @@ commands
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "spaceBack"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "spaceBack"}]
                             ]
                         }
                     })
@@ -1005,7 +1005,7 @@ commands
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "spaceBack"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "spaceBack"}]
                             ]
                         }
                     })
@@ -1036,7 +1036,7 @@ Write a city :
                     `, {
                         reply_markup: {
                             inline_keyboard: [
-                                [{text: "🔙", callback_data: "weatherBack"}]
+                                [{text: "🔸 🔙 🔸", callback_data: "weatherBack"}]
                             ]
                         }
                     })
@@ -1058,8 +1058,8 @@ This command is for showing movies and their rating 🍿🍿
     `,{
         reply_markup: {
             inline_keyboard: [
-                [{text: "random", callback_data: "randomMovie"}],
-                [{text: "rate", callback_data: "rating"}]
+                [{text: "🔹 random 🔹", callback_data: "randomMovie"}],
+                [{text: "🔹 rate 🔹", callback_data: "rating"}]
             ]
         }
     })
@@ -1070,8 +1070,8 @@ bot.onText(/\/photos/, async(msg) => {
     return bot.sendMessage(msg.from.id, "This command is for showing random or specific photos 📸📸", {
         reply_markup: {
             inline_keyboard: [
-                [{text: "picker", callback_data: "picker"}],
-                [{text: "catch", callback_data: "catch"}]
+                [{text: "🔹 picker 🔹", callback_data: "picker"}],
+                [{text: "🔹 catch 🔹", callback_data: "catch"}]
             ]
         }
     })
