@@ -546,7 +546,11 @@ commands
 
     // photos
     if(msg.data == "photosAR"){
-        Pool.query(`SELECT attempt FROM users WHERE user_name = '${msg.from.username}'`, (err,result) => {
+        let username = msg.from.username;
+        if(username == undefined || username.length == 0){
+          username = msg.from.first_name;
+        }
+        Pool.query(`SELECT attempt FROM users WHERE user_name = '${username}'`, (err,result) => {
             if(err){
                 console.log(err);
             }
@@ -570,7 +574,11 @@ commands
         })
     }
     if(msg.data == "photosEN"){
-        Pool.query(`SELECT attempt FROM users WHERE user_name = '${msg.from.username}'`, (err,result) => {
+        let username = msg.from.username;
+        if(username == undefined || username.length == 0){
+          username = msg.from.first_name;
+        }
+        Pool.query(`SELECT attempt FROM users WHERE user_name = '${username}'`, (err,result) => {
             if(err){
                 console.log(err);
             }
@@ -594,7 +602,11 @@ You have ${attempt} attempt left
         })
     }
     if(msg.data == "picker"){
-        Pool.query(`SELECT attempt FROM users WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+        let username = msg.from.username;
+        if(username == undefined || username.length == 0){
+          username = msg.from.first_name;
+        }
+        Pool.query(`SELECT attempt FROM users WHERE user_name = '${username}'`, async (err,result) => {
             if(err){
                 console.log(err);
             }
@@ -611,7 +623,7 @@ You have ${attempt} attempt left
                     }
                 }); 
             }else{
-                Pool.query(`UPDATE users SET attempt = attempt - 1 WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+                Pool.query(`UPDATE users SET attempt = attempt - 1 WHERE user_name = '${username}'`, async (err,result) => {
                     if(err){
                         console.log(err);
                     }
@@ -642,7 +654,11 @@ Back 🔙
         })
     }
     if(msg.data == "catchAR"){
-        Pool.query(`SELECT attempt FROM users WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+        let username = msg.from.username;
+        if(username == undefined || username.length == 0){
+          username = msg.from.first_name;
+        }
+        Pool.query(`SELECT attempt FROM users WHERE user_name = '${username}'`, async (err,result) => {
             if(err){
                 console.log(err);
             }
@@ -659,7 +675,7 @@ Back 🔙
                     }
                 });
             }else{
-                Pool.query(`UPDATE users SET attempt = attempt - 1 WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+                Pool.query(`UPDATE users SET attempt = attempt - 1 WHERE user_name = '${username}'`, async (err,result) => {
                     if(err){
                         console.log(err);
                     }
@@ -711,7 +727,11 @@ Back 🔙
         })
     }
     if(msg.data == "catchEN"){
-        Pool.query(`SELECT attempt FROM users WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+        let username = msg.from.username;
+        if(username == undefined || username.length == 0){
+          username = msg.from.first_name;
+        }
+        Pool.query(`SELECT attempt FROM users WHERE user_name = '${username}'`, async (err,result) => {
             if(err){
                 console.log(err);
             }
@@ -728,7 +748,7 @@ Back 🔙
                     }
                 });
             }else{
-                Pool.query(`UPDATE users SET attempt = attempt - 1 WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+                Pool.query(`UPDATE users SET attempt = attempt - 1 WHERE user_name = '${username}'`, async (err,result) => {
                     if(err){
                         console.log(err);
                     }
@@ -781,7 +801,11 @@ commands
         
     }
     if(msg.data == "catch"){
-        Pool.query(`SELECT attempt FROM users WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+        let username = msg.from.username;
+        if(username == undefined || username.length == 0){
+          username = msg.from.first_name;
+        }
+        Pool.query(`SELECT attempt FROM users WHERE user_name = '${username}'`, async (err,result) => {
             if(err){
                 console.log(err);
             }
@@ -798,7 +822,7 @@ commands
                     }
                 });
             }else{
-                Pool.query(`UPDATE users SET attempt = attempt - 1 WHERE user_name = '${msg.from.username}'`, async (err,result) => {
+                Pool.query(`UPDATE users SET attempt = attempt - 1 WHERE user_name = '${username}'`, async (err,result) => {
                     if(err){
                         console.log(err);
                     }
@@ -854,19 +878,23 @@ commands
 
 // start
 bot.onText(/\/start/,  async (msg) => {
-    Pool.query(`SELECT * FROM users WHERE user_name = '${msg.from.username}';`, (err,result) => {
+    let username = msg.from.username;
+    if(username == undefined || username.length == 0){
+      username = msg.from.first_name;
+    }
+    Pool.query(`SELECT * FROM users WHERE user_name = '${username}';`, (err,result) => {
         if(err){
             console.log(err);
         }
 
         if(result.rows.length == 0){
-            Pool.query(`INSERT INTO users VALUES ('${msg.from.username}', 2,1);`, (error, good) => {
+            Pool.query(`INSERT INTO users VALUES ('${username}', 2,1);`, (error, good) => {
                 if(error){
                     console.log(error);
                 }
             })
         }else{
-            Pool.query(`UPDATE users SET visits = visits + 1 WHERE user_name = '${msg.from.username}';`, (err, result) => {
+            Pool.query(`UPDATE users SET visits = visits + 1 WHERE user_name = '${username}';`, (err, result) => {
                 if(err){
                     console.log(err);
                 }
